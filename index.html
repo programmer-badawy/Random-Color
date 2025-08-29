@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .alert {
+        background-color: rgb(208, 255, 169);
+        width: 200px;
+        height: 30px;
+        position: absolute;
+        top: 20px;
+        transform: translateY(-220px);
+        z-index: 999;
+        padding: 5px;
+        border: 2px solid green;
+        display: flex;
+        align-items: center;
+        text-transform: capitalize;
+        gap: 20px;
+        transition: .5s;
+
+      }
+      .show {
+        transform: translateY(0);
+      }
+      .alert i {
+        color: green;
+        width: 10%;
+      }
+      .alert span {
+        display: block;
+        width: 90%;
+      }
+
+      .container {
+        width: 80%;
+        height: 80vh;
+        border: 2px solid;
+        padding: 20px;
+        font-size: 20px;
+        position: relative;
+      }
+      p {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 10px;
+        width: 200px;
+        text-align: left;
+        border-radius: 10px 0 0;
+        background-color: black;
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      button {
+        outline: 0;
+        padding: 10px;
+        color: rgb(0, 0, 0);
+        text-transform: capitalize;
+        background-color: rgb(255, 255, 255);
+        box-shadow: -2px 5px 0 0px rgb(0, 0, 0);
+        border: 1px solid black;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        transition: 0.2s;
+      }
+      button:active {
+        box-shadow: 0px 0px 0 0px black;
+        top: 20px;
+        left: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="alert">
+      <i class="fa-solid fa-check"></i>
+      <span>saved on clipboard</span>
+    </div>
+    <div class="container">
+      <button>change color</button>
+      <p title="Click To Copy">rgb(255, 255, 255)</p>
+    </div>
+
+    <script>
+      let container = document.querySelector(".container");
+      let btns = document.querySelectorAll("button");
+      let colorCode = document.querySelector("p");
+      let saveMsg = document.querySelector(".alert");
+
+      function changeColor() {
+        let red = parseInt(Math.random() * 256);
+        let green = parseInt(Math.random() * 256);
+        let blue = parseInt(Math.random() * 256);
+
+        container.style.background = `rgb(${red}, ${green}, ${blue})`;
+        colorCode.innerHTML = `rgb(${red}, ${green}, ${blue})`;
+        colorCode.style.color = `rgb(${red}, ${green}, ${blue})`;
+      }
+      function copyColor() {
+        navigator.clipboard.writeText(colorCode.innerHTML);
+        saveMsg.classList.add("show");
+        setTimeout(() => {
+          saveMsg.classList.remove("show");
+        },4000);
+      }
+
+      btns[0].addEventListener("click", changeColor);
+      colorCode.addEventListener("click", copyColor);
+    </script>
+  </body>
+</html>
