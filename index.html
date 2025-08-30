@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Color</title>
+    <link rel="website icon" type="png" href="icon.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
@@ -19,7 +20,7 @@
       }
       body {
         width: 100%;
-        height: 100dvh;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,8 +39,7 @@
         align-items: center;
         text-transform: capitalize;
         gap: 20px;
-        transition: .5s;
-
+        transition: 0.5s;
       }
       .show {
         transform: translateY(0);
@@ -55,26 +55,27 @@
 
       .container {
         width: 80%;
-        height: 80vh;
-        border: 2px solid;
-        padding: 20px;
+        height: 80dvh;
         font-size: 20px;
+        border: 4px solid;
+        padding: 20px;
         position: relative;
-top:10px;
+        overflow: hidden;
       }
       p {
         position: absolute;
         bottom: 0;
         right: 0;
         padding: 10px;
-        width: 250px;
+        width: 200px;
         text-align: left;
-        border-radius: 10px 0 0;
+        border-radius: 5px 0 0;
         background-color: black;
         color: rgb(255, 255, 255);
         cursor: pointer;
         text-transform: uppercase;
         font-weight: 700;
+        font-size: 20px;
       }
 
       button {
@@ -83,7 +84,7 @@ top:10px;
         color: rgb(0, 0, 0);
         text-transform: capitalize;
         background-color: rgb(255, 255, 255);
-        box-shadow: -2px 5px 0 0px rgb(0, 0, 0);
+        box-shadow: 0px 3px 0 0px rgb(0, 0, 0);
         border: 1px solid black;
         border-radius: 5px;
         font-size: 16px;
@@ -92,11 +93,38 @@ top:10px;
         top: 15px;
         left: 20px;
         transition: 0.2s;
+        transform: translateY(2px);
+      }
+      button:hover {
+        transform: translateY(0px);
+        box-shadow: 0px 5px 0 0px rgb(0, 0, 0);
+
       }
       button:active {
         box-shadow: 0px 0px 0 0px black;
         top: 20px;
-        left: 18px;
+      }
+      button::selection {
+        background-color: transparent;
+      }
+
+      .copyright {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        opacity: 0.3;
+        cursor: default;
+        text-transform: capitalize;
+        width: 70px;
+        height: 60px;
+        /* background-color: aqua; */
+      }
+      .copyright::selection {
+        background-color: transparent;
+      }
+      .copyright a {
+        color: initial;
+        text-decoration: none;
       }
     </style>
   </head>
@@ -109,32 +137,53 @@ top:10px;
       <button>change color</button>
       <p title="Click To Copy">rgb(255, 255, 255)</p>
     </div>
+    <p title="Click To Copy">rgb(255, 255, 255)</p>
 
+    <span class="copyright">
+      Coding by
+      <a href="https://www.linkedin.com/in/khaled-elbadawy">khaled Elbadawy</a>
+    </span>
     <script>
       let container = document.querySelector(".container");
       let btns = document.querySelectorAll("button");
-      let colorCode = document.querySelector("p");
+      let colorCode = document.querySelectorAll("p");
       let saveMsg = document.querySelector(".alert");
 
       function changeColor() {
+        let body = document.querySelector("body");
         let red = parseInt(Math.random() * 256);
         let green = parseInt(Math.random() * 256);
         let blue = parseInt(Math.random() * 256);
-
+        body.style.background = `rgb(${255 - red}, ${255 - green}, ${
+          255 - blue
+        })`;
         container.style.background = `rgb(${red}, ${green}, ${blue})`;
-        colorCode.innerHTML = `rgb(${red}, ${green}, ${blue})`;
-        colorCode.style.color = `rgb(${red}, ${green}, ${blue})`;
+        colorCode[0].innerHTML = `rgb(${red}, ${green}, ${blue})`;
+        colorCode[1].innerHTML = `rgb(${255 - red}, ${255 - green}, ${
+          255 - blue
+        })`;
+        colorCode[0].style.color = `rgb(${red}, ${green}, ${blue})`;
+        colorCode[1].style.color = `rgb(${255 - red}, ${255 - green}, ${
+          255 - blue
+        })`;
       }
       function copyColor() {
-        navigator.clipboard.writeText(colorCode.innerHTML);
+        navigator.clipboard.writeText(colorCode[0].innerHTML);
         saveMsg.classList.add("show");
         setTimeout(() => {
           saveMsg.classList.remove("show");
-        },4000);
+        }, 3000);
       }
-
+      function copyBodyColor() {
+        navigator.clipboard.writeText(colorCode[1].innerHTML);
+        saveMsg.classList.add("show");
+        setTimeout(() => {
+          saveMsg.classList.remove("show");
+        }, 3000);
+      }
       btns[0].addEventListener("click", changeColor);
-      colorCode.addEventListener("click", copyColor);
+      colorCode[0].addEventListener("click", copyColor);
+      colorCode[1].addEventListener("click", copyBodyColor);
     </script>
   </body>
 </html>
